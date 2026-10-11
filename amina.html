@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Amina ♡</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 <style>
-html,body{height:100%;margin:0;background:#0a030a;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+html,body{height:100%;margin:0;background:#080204;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
 canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
-#name{position:fixed;left:0;right:0;text-align:center;pointer-events:none;color:#fff;
- font-family:'Great Vibes','Snell Roundhand','Brush Script MT',cursive;line-height:1;
+#name{position:fixed;left:0;right:0;text-align:center;pointer-events:none;color:#fff3f5;
+ font-family:'Dancing Script','Segoe Script','Brush Script MT',cursive;font-weight:600;line-height:1;
  opacity:0;filter:blur(14px);letter-spacing:.3em;transform:scale(1.08);
- text-shadow:0 0 12px rgba(255,120,170,.95),0 0 34px rgba(255,40,110,.8),0 0 70px rgba(255,20,90,.6);
+ text-shadow:0 0 10px rgba(200,30,60,.95),0 0 30px rgba(150,10,40,.9),0 0 64px rgba(128,0,32,.8);
  transition:opacity 3.2s ease,filter 3.2s ease,letter-spacing 3.6s cubic-bezier(.2,.7,.2,1),transform 3.6s ease}
 #name.show{opacity:1;filter:blur(0);letter-spacing:.04em;transform:scale(1)}
 #hint{position:fixed;left:0;right:0;bottom:calc(9vh + env(safe-area-inset-bottom,0px));text-align:center;
  font:300 15px/1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.35em;text-transform:uppercase;
- color:rgba(255,190,215,.85);pointer-events:none;animation:pulse 2.6s ease-in-out infinite;transition:opacity 1.2s}
+ color:rgba(225,130,150,.85);pointer-events:none;animation:pulse 2.6s ease-in-out infinite;transition:opacity 1.2s}
 #hint.gone{opacity:0;animation:none}
 @keyframes pulse{0%,100%{opacity:.25}50%{opacity:.95}}
 </style>
@@ -32,15 +32,15 @@ const cv=document.getElementById('c'),ctx=cv.getContext('2d'),nameEl=document.ge
 nameEl.textContent=NAME;hintEl.textContent=HINT;
 let W,H,D,S,cx,cy,ps=[],state=0,formStart=0,shown=false,ptr={x:-999,y:-999,on:false};
 function spr(a,b){const s=document.createElement('canvas');s.width=s.height=64;const g=s.getContext('2d');
-  const r=g.createRadialGradient(32,32,0,32,32,32);r.addColorStop(0,a);r.addColorStop(.28,b);r.addColorStop(1,'rgba(255,40,100,0)');
+  const r=g.createRadialGradient(32,32,0,32,32,32);r.addColorStop(0,a);r.addColorStop(.28,b);r.addColorStop(1,'rgba(128,0,32,0)');
   g.fillStyle=r;g.fillRect(0,0,64,64);return s;}
-const SP=[spr('rgba(255,255,255,1)','rgba(255,160,195,.8)'),spr('rgba(255,215,230,1)','rgba(255,80,140,.7)'),spr('rgba(255,130,170,1)','rgba(235,25,95,.6)')];
+const SP=[spr('rgba(255,150,160,1)','rgba(195,25,55,.8)'),spr('rgba(225,60,85,1)','rgba(145,12,38,.75)'),spr('rgba(175,25,55,1)','rgba(115,0,30,.7)')];
 function resize(){
   D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;
   cv.width=W*D;cv.height=H*D;ctx.setTransform(D,0,0,D,0,0);
   S=Math.min(W*0.88/32,H*0.55/29);cx=W/2;cy=H*0.46;
   nameEl.style.fontSize=(S*7.5)+'px';nameEl.style.top=(cy-S*3.6)+'px';
-  ctx.fillStyle='#0a030a';ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#080204';ctx.fillRect(0,0,W,H);
 }
 function init(){
   const n=Math.max(1800,Math.min(3600,Math.round(W*H/110)));
@@ -58,7 +58,7 @@ function frame(now){
   const t=now/1000,el=(now-formStart)/1000,formProg=state?Math.min(1,el/3.6):0;
   const b=formProg>0.85?beatAt(t)*Math.min(1,(formProg-0.85)/0.15):0,sc=1+0.045*b;
   ctx.globalCompositeOperation='source-over';
-  ctx.fillStyle='rgba(10,3,10,0.2)';ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='rgba(8,2,4,0.2)';ctx.fillRect(0,0,W,H);
   ctx.globalCompositeOperation='lighter';
   const R=S*5,R2=R*R;
   for(const p of ps){
@@ -80,7 +80,7 @@ function frame(now){
     p.x+=p.vx;p.y+=p.vy;
     if(!gather){if(p.x<-20)p.x=W+20;else if(p.x>W+20)p.x=-20;if(p.y<-20)p.y=H+20;else if(p.y>H+20)p.y=-20;}
     const tw=0.5+0.5*Math.sin(t*2+p.ph);
-    const al=gather?Math.min(1,0.5+0.35*tw+0.25*b):0.2+0.4*tw;
+    const al=gather?Math.min(1,0.4+0.3*tw+0.2*b):0.2+0.4*tw;
     const s=p.sz*(1+b*0.35)*2;
     ctx.globalAlpha=al;
     ctx.drawImage(SP[p.c],p.x-s*1.2,p.y-s*1.2,s*2.4,s*2.4);
